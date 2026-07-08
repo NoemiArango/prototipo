@@ -1,6 +1,20 @@
 <div class="layout-wrapper">
-    <app-sidebar></app-sidebar>
-    <main class="layout-content">
-        <router-outlet></router-outlet>
-    </main>
+    <app-sidebar [open]="sidebarOpen()" (closeRequested)="closeSidebar()"></app-sidebar>
+
+    @if (sidebarOpen()) {
+    <div class="sidebar-overlay" (click)="closeSidebar()"></div>
+    }
+
+    <div class="layout-main">
+        <header class="layout-topbar">
+            <button class="hamburger-btn" (click)="toggleSidebar()" aria-label="Abrir menú">
+                <span class="material-icons">menu</span>
+            </button>
+            <span class="topbar-title">Prototipo</span>
+        </header>
+
+        <main class="layout-content">
+            <router-outlet></router-outlet>
+        </main>
+    </div>
 </div>

@@ -1,9 +1,12 @@
-<aside class="sidebar">
+<aside class="sidebar" [class.open]="open">
     <div class="sidebar-brand">
         <span class="brand-logo">N</span>
         <span class="brand-name">Prototipo</span>
+        <button class="close-btn" (click)="closeRequested.emit()" aria-label="Cerrar menú">
+            <span class="material-icons">close</span>
+        </button>
     </div>
-    <nav class="sidebar-nav">
+    <nav class="sidebar-nav" (click)="onNavigate()">
         @for (item of menu; track item.label) {
         <app-menu-item [item]="item" [level]="0"></app-menu-item>
         }
