@@ -18,15 +18,15 @@ export const MENU_DATA: MenuItem[] = [
                         label: 'Gestión',
                         icon: 'manage_accounts',
                         children: [
-                            { label: 'Crear usuario', route: '/admin/usuarios/crear' },
-                            { label: 'Editar usuario', route: '/admin/usuarios/editar' }
+                            { label: 'Crear usuario', route: '/crear' },
+                            { label: 'Editar usuario', route: '/editar' }
                         ]
                     },
                     {
                         label: 'Roles',
                         icon: 'security',
                         children: [
-                            { label: 'Asignar permisos', route: '/admin/usuarios/roles/permisos' }
+                            { label: 'Asignar permisos', route: '/permisos' }
                         ]
                     }
                 ]

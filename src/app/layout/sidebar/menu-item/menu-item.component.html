@@ -1,8 +1,5 @@
-<div class="menu-item" 
-     [class.has-children]="hasChildren" 
-     [class.expanded]="expanded()"
-     [style.--level]="level"
-     [ngClass]="'level-' + level">
+<div class="menu-item" [class.has-children]="hasChildren" [class.expanded]="expanded()" [style.--level]="level"
+    [ngClass]="'level-' + level">
     @if (hasChildren) {
     <button type="button" class="menu-row" (click)="toggle()">
         @if (item.icon) {
