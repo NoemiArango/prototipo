@@ -1,1 +1,204 @@
-<p>crear works!</p>
+<div class="wizard-wrapper">
+
+    <div class="stepper">
+        <div class="stepper-list">
+            @for (step of steps; track step.key; let i = $index) {
+            <button type="button" class="stepper-item"
+                    [class.active]="currentStep() === i"
+                    [class.completed]="currentStep() > i || (currentStep() === i && isStepValid(i))"
+                    (click)="goToStep(i)">
+                <span class="stepper-dot">
+                    @if (currentStep() > i) {
+                    <span class="material-icons">check</span>
+                    } @else {
+                    <span class="material-icons">{{ step.icon }}</span>
+                    }
+                </span>
+                <span class="stepper-label">{{ step.label }}</span>
+            </button>
+            }
+        </div>
+    </div>
+
+    <form [formGroup]="form" (ngSubmit)="onSubmit()" class="wizard-form">
+
+        <!-- Paso 1: Datos personales -->
+        @if (currentStep() === 0) {
+        <div class="form-section" formGroupName="personal">
+            <h2 class="section-title">Datos personales</h2>
+
+            <div class="field-row">
+                <div class="field-group">
+                    <label for="nombre">Nombre</label>
+                    <input id="nombre" type="text" formControlName="nombre" placeholder="Ej. Juan" />
+                    @if (personalGroup?.get('nombre')?.touched && personalGroup?.get('nombre')?.invalid) {
+                    <span class="field-error">El nombre es obligatorio</span>
+                    }
+                </div>
+                <div class="field-group">
+                    <label for="apellido">Apellido</label>
+                    <input id="apellido" type="text" formControlName="apellido" placeholder="Ej. Pérez" />
+                    @if (personalGroup?.get('apellido')?.touched && personalGroup?.get('apellido')?.invalid) {
+                    <span class="field-error">El apellido es obligatorio</span>
+                    }
+                </div>
+            </div>
+
+            <div class="field-row">
+                <div class="field-group">
+                    <label for="email">Correo electrónico</label>
+                    <input id="email" type="email" formControlName="email" placeholder="correo@ejemplo.com" />
+                    @if (personalGroup?.get('email')?.touched && personalGroup?.get('email')?.invalid) {
+                    <span class="field-error">Ingresa un correo válido</span>
+                    }
+                </div>
+                <div class="field-group">
+                    <label for="telefono">Teléfono</label>
+                    <input id="telefono" type="text" formControlName="telefono" placeholder="Ej. 5512345678" />
+                    @if (personalGroup?.get('telefono')?.touched && personalGroup?.get('telefono')?.invalid) {
+                    <span class="field-error">El teléfono es obligatorio</span>
+                    }
+                </div>
+            </div>
+        </div>
+        }
+
+        <!-- Paso 2: Datos de cuenta -->
+        @if (currentStep() === 1) {
+        <div class="form-section" formGroupName="cuenta">
+            <h2 class="section-title">Datos de cuenta</h2>
+
+            <div class="field-group">
+                <label for="usuario">Nombre de usuario</label>
+                <input id="usuario" type="text" formControlName="usuario" placeholder="Ej. jperez" />
+                @if (cuentaGroup?.get('usuario')?.touched && cuentaGroup?.get('usuario')?.invalid) {
+                <span class="field-error">El usuario es obligatorio</span>
+                }
+            </div>
+
+            <div class="field-row">
+                <div class="field-group">
+                    <label for="password">Contraseña</label>
+                    <input id="password" type="password" formControlName="password" placeholder="Mínimo 6 caracteres" />
+                    @if (cuentaGroup?.get('password')?.touched && cuentaGroup?.get('password')?.invalid) {
+                    <span class="field-error">Mínimo 6 caracteres</span>
+                    }
+                </div>
+                <div class="field-group">
+                    <label for="confirmarPassword">Confirmar contraseña</label>
+                    <input id="confirmarPassword" type="password" formControlName="confirmarPassword" placeholder="Repite la contraseña" />
+                    @if (cuentaGroup?.get('confirmarPassword')?.touched && cuentaGroup?.errors?.['passwordMismatch']) {
+                    <span class="field-error">Las contraseñas no coinciden</span>
+                    }
+                </div>
+            </div>
+        </div>
+        }
+
+        <!-- Paso 3: Rol y permisos -->
+        @if (currentStep() === 2) {
+        <div class="form-section" formGroupName="rol">
+            <h2 class="section-title">Rol y permisos</h2>
+
+            <div class="field-row">
+                <div class="field-group">
+                    <label for="rolSelect">Rol</label>
+                    <select id="rolSelect" formControlName="rol">
+                        <option value="">Selecciona un rol</option>
+                        <option value="admin">Administrador</option>
+                        <option value="editor">Editor</option>
+                        <option value="visor">Solo lectura</option>
+                    </select>
+                    @if (rolGroup?.get('rol')?.touched && rolGroup?.get('rol')?.invalid) {
+                    <span class="field-error">Selecciona un rol</span>
+                    }
+                </div>
+                <div class="field-group">
+                    <label for="departamento">Departamento</label>
+                    <select id="departamento" formControlName="departamento">
+                        <option value="">Selecciona un departamento</option>
+                        <option value="ventas">Ventas</option>
+                        <option value="soporte">Soporte</option>
+                        <option value="sistemas">Sistemas</option>
+                    </select>
+                    @if (rolGroup?.get('departamento')?.touched && rolGroup?.get('departamento')?.invalid) {
+                    <span class="field-error">Selecciona un departamento</span>
+                    }
+                </div>
+            </div>
+
+            <div class="field-group">
+                <label>Estado</label>
+                <div class="radio-row">
+                    <label class="radio-option">
+                        <input type="radio" formControlName="estado" value="activo" />
+                        Activo
+                    </label>
+                    <label class="radio-option">
+                        <input type="radio" formControlName="estado" value="inactivo" />
+                        Inactivo
+                    </label>
+                </div>
+            </div>
+        </div>
+        }
+
+        <!-- Paso 4: Confirmación -->
+        @if (currentStep() === 3) {
+        <div class="form-section">
+            <h2 class="section-title">Confirmación</h2>
+            <p class="confirm-note">Revisa que la información sea correcta antes de crear el usuario.</p>
+
+            <div class="summary-grid">
+                <div class="summary-block">
+                    <h3>Datos personales</h3>
+                    <p><strong>Nombre:</strong> {{ personalGroup?.get('nombre')?.value }} {{ personalGroup?.get('apellido')?.value }}</p>
+                    <p><strong>Email:</strong> {{ personalGroup?.get('email')?.value }}</p>
+                    <p><strong>Teléfono:</strong> {{ personalGroup?.get('telefono')?.value }}</p>
+                </div>
+                <div class="summary-block">
+                    <h3>Cuenta</h3>
+                    <p><strong>Usuario:</strong> {{ cuentaGroup?.get('usuario')?.value }}</p>
+                </div>
+                <div class="summary-block">
+                    <h3>Rol</h3>
+                    <p><strong>Rol:</strong> {{ rolGroup?.get('rol')?.value }}</p>
+                    <p><strong>Departamento:</strong> {{ rolGroup?.get('departamento')?.value }}</p>
+                    <p><strong>Estado:</strong> {{ rolGroup?.get('estado')?.value }}</p>
+                </div>
+            </div>
+
+            @if (submitted()) {
+            <div class="success-banner">
+                <span class="material-icons">check_circle</span>
+                Usuario creado correctamente (simulado).
+            </div>
+            }
+        </div>
+        }
+
+        <!-- Navegación -->
+        <div class="wizard-actions">
+            @if (currentStep() > 0) {
+            <button type="button" class="btn-secondary" (click)="prev()">
+                <span class="material-icons">chevron_left</span>
+                Anterior
+            </button>
+            } @else {
+            <span></span>
+            }
+
+            @if (currentStep() < steps.length - 1) {
+            <button type="button" class="btn-primary" (click)="next()">
+                Siguiente
+                <span class="material-icons">chevron_right</span>
+            </button>
+            } @else {
+            <button type="submit" class="btn-primary">
+                <span class="material-icons">check</span>
+                Crear usuario
+            </button>
+            }
+        </div>
+    </form>
+</div>

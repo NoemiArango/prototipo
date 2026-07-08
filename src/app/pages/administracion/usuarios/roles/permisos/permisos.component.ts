@@ -1,8 +1,10 @@
 import { Component } from '@angular/core';
+import { CommonModule } from '@angular/common';
 
 @Component({
   selector: 'app-permisos',
-  imports: [],
+  standalone: true,
+  imports: [CommonModule],
   templateUrl: './permisos.component.html',
   styleUrl: './permisos.component.css'
 })
