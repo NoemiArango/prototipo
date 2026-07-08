@@ -1,0 +1,47 @@
+.sidebar {
+    width: 260px;
+    min-width: 260px;
+    height: 100vh;
+    position: sticky;
+    top: 0;
+    background: #fff;
+    border-right: 1px solid #EFEBEC;
+    display: flex;
+    flex-direction: column;
+    padding: 20px 14px;
+    overflow-y: auto;
+}
+
+.sidebar-brand {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 0 6px 20px;
+    margin-bottom: 10px;
+    border-bottom: 1px solid #EFEBEC;
+}
+
+.brand-logo {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 34px;
+    height: 34px;
+    border-radius: 10px;
+    background: var(--wine);
+    color: #fff;
+    font-weight: 700;
+    font-size: 15px;
+}
+
+.brand-name {
+    font-weight: 600;
+    font-size: 15px;
+    color: var(--text-dark);
+}
+
+.sidebar-nav {
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+}

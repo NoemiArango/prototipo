@@ -1,0 +1,11 @@
+<aside class="sidebar">
+    <div class="sidebar-brand">
+        <span class="brand-logo">N</span>
+        <span class="brand-name">Prototipo</span>
+    </div>
+    <nav class="sidebar-nav">
+        @for (item of menu; track item.label) {
+        <app-menu-item [item]="item" [level]="0"></app-menu-item>
+        }
+    </nav>
+</aside>

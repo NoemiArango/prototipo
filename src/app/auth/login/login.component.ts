@@ -39,6 +39,6 @@ export class LoginComponent {
     setTimeout(() => {
       this.loading.set(false);
       this.router.navigate(['/dashboard']);
-    }, 800);
+    }, 600);
   }
 }

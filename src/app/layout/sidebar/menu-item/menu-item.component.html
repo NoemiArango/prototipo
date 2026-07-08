@@ -1,0 +1,26 @@
+<div class="menu-item" [class.has-children]="hasChildren" [style.--level]="level">
+    @if (hasChildren) {
+    <button type="button" class="menu-row" (click)="toggle()">
+        @if (item.icon) {
+        <span class="material-icons menu-icon">{{ item.icon }}</span>
+        }
+        <span class="menu-label">{{ item.label }}</span>
+        <span class="menu-arrow" [class.open]="expanded()">›</span>
+    </button>
+    } @else {
+    <a class="menu-row" [routerLink]="item.route" routerLinkActive="active">
+        @if (item.icon) {
+        <span class="material-icons menu-icon">{{ item.icon }}</span>
+        }
+        <span class="menu-label">{{ item.label }}</span>
+    </a>
+    }
+
+    @if (hasChildren && expanded()) {
+    <div class="submenu">
+        @for (child of item.children; track child.label) {
+        <app-menu-item [item]="child" [level]="level + 1"></app-menu-item>
+        }
+    </div>
+    }
+</div>
