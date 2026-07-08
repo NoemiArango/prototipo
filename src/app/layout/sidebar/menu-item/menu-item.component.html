@@ -1,11 +1,15 @@
-<div class="menu-item" [class.has-children]="hasChildren" [style.--level]="level">
+<div class="menu-item" 
+     [class.has-children]="hasChildren" 
+     [class.expanded]="expanded()"
+     [style.--level]="level"
+     [ngClass]="'level-' + level">
     @if (hasChildren) {
     <button type="button" class="menu-row" (click)="toggle()">
         @if (item.icon) {
         <span class="material-icons menu-icon">{{ item.icon }}</span>
         }
         <span class="menu-label">{{ item.label }}</span>
-        <span class="menu-arrow" [class.open]="expanded()">›</span>
+        <span class="material-icons menu-arrow" [class.open]="expanded()">chevron_right</span>
     </button>
     } @else {
     <a class="menu-row" [routerLink]="item.route" routerLinkActive="active">
