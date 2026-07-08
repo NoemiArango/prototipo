@@ -1,1 +1,18 @@
-/* You can add global styles to this file, and also import other style files */
+:root {
+    --wine: #9D2449;
+    --wine-dark: #7A1B39;
+    --gold: #B38E5D;
+    --gold-light: #D9C4A3;
+    --text-dark: #2B2530;
+    --text-muted: #8A8390;
+    --bg-page: #F6F3F1;
+}
+
+* {
+    box-sizing: border-box;
+}
+
+body {
+    margin: 0;
+    font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
+}
